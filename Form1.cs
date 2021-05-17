@@ -24,14 +24,12 @@ namespace QR_Imagenes
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.DrawMode = DrawMode.OwnerDrawFixed;
         }
-        int size = 0;
         string cadena;
-        string paleta = "0";
         string[,] pixl2;
         string[,] Paletas = new string[0,0];
-        int selpal = 0;
-        int selcol = 14;
-        bool seleccionando = false, md = false;
+        int size = 0, selpal = 0;
+        string selcol = "w";
+        bool md = false;
         private void Form1_Load(object sender, EventArgs e)//estado inicial de la forma
         {
             textBox1.Text = "anon";
@@ -87,7 +85,6 @@ namespace QR_Imagenes
             button14.BackColor = Color.White;
             button15.BackColor = Color.Black;
             button15.BackColor = Color.Black;
-            label1.Text = comboBox1.SelectedItem.ToString();
             button1.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(1));
             button2.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(2));
             button3.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(3));
@@ -170,7 +167,8 @@ namespace QR_Imagenes
                             gfx.FillRectangle(new SolidBrush(Color.Black), x * step, y * step, step, step);
                             break;
                         default:
-
+                            Color tmpcolor = ColorTranslator.FromHtml(Paletas[selpal, int.Parse(pixl2[x, y])]);
+                            gfx.FillRectangle(new SolidBrush(tmpcolor), x * step, y * step, step, step);
                             break;
                     }
                 }
@@ -207,6 +205,8 @@ namespace QR_Imagenes
                     gfx.FillRectangle(new SolidBrush(Color.Black), x * step, y * step, step, step);
                     break;
                 default:
+                    Color tmpcolor = ColorTranslator.FromHtml(Paletas[selpal,int.Parse(pixl2[x,y])]);
+                    gfx.FillRectangle(new SolidBrush(tmpcolor), x * step, y * step, step, step);
                     break;
             }
             for (float i = 0; i < size + 1; i++)
@@ -224,7 +224,7 @@ namespace QR_Imagenes
             {
                 textBox1.Text = "anon";
             }
-            cadena = "qrimg," + textBox1.Text + "," + size + "," + paleta;//0,1,2,3
+            cadena = "qrimg," + textBox1.Text + "," + size + "," + selpal;//0,1,2,3
             for (int i = 0; i < size; i++)
             {
                 for (int ii = 0; ii < size; ii++)//4,...,size*size+4
@@ -234,7 +234,6 @@ namespace QR_Imagenes
             }
             actualizarqr();
         }
-
         private void imagenvista_Click(object sender, EventArgs e)
         {
             Point coor = imagenvista.PointToClient(Cursor.Position);
@@ -242,12 +241,20 @@ namespace QR_Imagenes
             //ME CAGA LA LOGICA DE ESTO PERO BUENO
             int x = Convert.ToInt32(Math.Floor(Convert.ToDouble(coor.X) / stp));
             int y = Convert.ToInt32(Math.Floor(Convert.ToDouble(coor.Y) / stp));
-            string color= "w";
-            if (x < pixl2.GetLength(0) && y < pixl2.GetLength(1) && x >= 0 && y >= 0 && pixl2[x, y] != color)
+            string color= selcol;
+            if (color != "s")
             {
-                pixl2[x, y] = color;// utilizar color seleccionado aqui, a partir de los colores de las bibliotecas.
-                updater(x, y);
+                if (x < pixl2.GetLength(0) && y < pixl2.GetLength(1) && x >= 0 && y >= 0 && pixl2[x, y] != color)
+                {
+                    pixl2[x, y] = color;// utilizar color seleccionado aqui, a partir de los colores de las bibliotecas.
+                    updater(x, y);
+                }
             }
+            else
+            {
+                selcol = pixl2[x, y];
+            }
+            
         }
         private void imagenvista_MouseMove(object sender, MouseEventArgs e)
         {
@@ -258,8 +265,8 @@ namespace QR_Imagenes
                 //ME CAGA LA LOGICA DE ESTO PERO BUENO
                 int x = Convert.ToInt32(Math.Floor(Convert.ToDouble(coor.X) / stp));
                 int y = Convert.ToInt32(Math.Floor(Convert.ToDouble(coor.Y) / stp));
-                string color = "w";
-                if (x < pixl2.GetLength(0) && y < pixl2.GetLength(1) && x >= 0 && y >= 0 && pixl2[x, y] != color)
+                string color = selcol;
+                if (x < pixl2.GetLength(0) && y < pixl2.GetLength(1) && x >= 0 && y >= 0 && pixl2[x, y] != color && color != "s")
                 {
                     pixl2[x, y] = color;// utilizar color seleccionado aqui, a partir de los colores de las bibliotecas.
                     updater(x, y);
@@ -267,7 +274,6 @@ namespace QR_Imagenes
             }
         }
         private void imagenvista_MouseDown(object sender, MouseEventArgs e){md = true;}
-
         private void imagenvista_MouseLeave(object sender, EventArgs e){md = false;}
         private void dimension_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -320,7 +326,7 @@ namespace QR_Imagenes
             if (sf.FileName != "" && sf.ShowDialog() == DialogResult.OK)
             {
 
-                System.IO.FileStream fs = (System.IO.FileStream)sf.OpenFile();
+                FileStream fs = (FileStream)sf.OpenFile();
                 switch (sf.FilterIndex)
                 {
                     case 1:
@@ -364,6 +370,46 @@ namespace QR_Imagenes
                 }
                 fs.Close();
                 sf.Dispose();
+            }
+        }
+        private void comboBox1_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            e.DrawFocusRectangle();
+            if (e.Index >= 0)
+            {
+                if (e.Index < imageList1.Images.Count)
+                {
+                    Image img = new Bitmap(imageList1.Images[e.Index]);
+                    e.Graphics.DrawImage(img, new PointF(e.Bounds.Left, e.Bounds.Top));
+                }
+            }
+        }
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Coloreta();
+            selpal =comboBox1.SelectedIndex;
+            for (int y = 0; y < size; y++)
+            {
+                for (int x = 0; x < size; x++)
+                {
+                    updater(x,y);
+                }
+            }
+
+        }
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            int color = int.Parse(((Button)sender).Name.Substring(6))-1;
+            switch (color)
+            {
+                case 12: selcol = "t"; break;
+                case 13: selcol = "w"; break;
+                case 14: selcol = "b"; break;
+                case 15: selcol = "s"; break;
+                default:
+                    selcol = color.ToString();
+                    break;
             }
         }
         /// VERSION1 no actualizado
@@ -480,23 +526,24 @@ namespace QR_Imagenes
                     }
                     else
                     {
-                        Form2 form2 = new Form2(img, codigo);
+                        Form2 form2 = new Form2(img, codigo, Paletas);
                         form2.StartPosition = FormStartPosition.CenterParent;
                         form2.ShowDialog();
                         if (form2.OKButtonClicked)
                         {
                             dimension.SelectedIndex = int.Parse(codigo.Split(',').ElementAt(2)) - 1;
+                            comboBox1.SelectedIndex = int.Parse(codigo.Split(',').ElementAt(3));
                             if (size == int.Parse(codigo.Split(',').ElementAt(2)))
                             {
                                 textBox1.Text = codigo.Split(',').ElementAt(1);
-                                paleta = codigo.Split(',').ElementAt(3);
+                                selpal = int.Parse(codigo.Split(',').ElementAt(3));
                                 for (int y = 0; y < size; y++)
                                 {
                                     for (int x = 0; x < size; x++)
                                     {
                                         string color = codigo.Split(',').ElementAt(4 + y*size + x);
-                                        pixl2[x, y] = color;// utilizar color seleccionado aqui, a partir de los colores de las bibliotecas.
-                                        updater(x, y);
+                                        pixl2[y, x] = color;// utilizar color seleccionado aqui, a partir de los colores de las bibliotecas.
+                                        updater(y, x);
                                     }
                                 }
                             }
@@ -508,21 +555,7 @@ namespace QR_Imagenes
             catch (Exception)
             {
                 Errorentrada(5);
-
             }
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //if (seleccionando == true)
-            //{
-            //    Cursor = Cursors.Default;
-            //    seleccionando = false;
-            //}
-            //System.Windows.Media.Color diacol;
-            //bool x = ColorPickerWindow.ShowDialog(out diacol, ColorPickerWPF.Code.ColorPickerDialogOptions.SimpleView);
-            //selcol = diacol.ToString().Remove(1, 2);
-            //botoncolor.BackColor = ColorTranslator.FromHtml(selcol);
-            //label3.Text = selcol;
         }
         private void botonsalir_Click(object sender, EventArgs e)
         {
@@ -579,69 +612,6 @@ namespace QR_Imagenes
             }
         }
 
-        private void gotero_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void comboBox1_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            //string fdsdsfd = sender.ToString();
-            //e.DrawBackground();
-            //for (int i = 0; i < Paletas.Count; i++)
-            //{
-            //    string[] col = paleta.Split(',');
-            //    int x = comboBox1.Size.Width;
-            //    int y = comboBox1.Size.Height;
-            //    for (int ii = 1; ii < col.Length; ii++)
-            //    {
-            //        e.Graphics.FillRectangle(new SolidBrush(ColorTranslator.FromHtml(col[ii])), ii * x, 0, x / 12, y);
-            //    }
-            //}
-
-            e.DrawBackground();
-            e.DrawFocusRectangle();
-            if (e.Index >= 0)
-            {
-                if (e.Index < imageList1.Images.Count)
-                {
-                    Image img = new Bitmap(imageList1.Images[e.Index]);
-                    e.Graphics.DrawImage(img, new PointF(e.Bounds.Left, e.Bounds.Top));
-                }
-            }
-
-
-            //e.DrawBackground();
-            //e.DrawFocusRectangle();
-            //if (e.Index >= 0)
-            //{
-            //    if (e.Index < comboBox1.Items.Count)
-            //    {
-            //        int x = 180;
-            //        int y = 20;
-            //        Image img = new Bitmap(x,y);
-            //        Graphics gfx = Graphics.FromImage(img);
-            //        string[] valor =comboBox1.Items[e.Index].ToString().Split(',');
-            //        for (int i = 1; i < valor.Length; i++)
-            //        {
-            //            gfx.FillRectangle(new SolidBrush(ColorTranslator.FromHtml(valor[i])), i * x, 0, x / 12, y);
-            //        }
-            //        e.Graphics.DrawImage(img, new PointF(e.Bounds.Left, e.Bounds.Top));
-            //    }
-            //}
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Coloreta();
-            selpal =comboBox1.SelectedIndex;
-
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            string color = ((Button)sender).Name.Substring(6);
-            selcol = int.Parse(color);
-        }
 
         public void Errorentrada(string mensaje)
         {

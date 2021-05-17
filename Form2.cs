@@ -16,9 +16,11 @@ namespace QR_Imagenes
         {
             InitializeComponent();
         }
-        public Form2(Image qr, string codigo)
+        string[,] pals;
+        public Form2(Image qr, string codigo, string[,] Paletas)
         {
             InitializeComponent();
+            pals = Paletas;
             pictureBox1.Image = Cargada(codigo,qr);
         }
         bool cargar = false;
@@ -34,39 +36,50 @@ namespace QR_Imagenes
         {
             string[] codigo = code.Split(',');
             int s = int.Parse(codigo[2]);
-            string[] array = new string[s * s];
-            for (int i = 0; i < s * s; i++)
+            int p = int.Parse(codigo[3]);
+            string[,] array = new string[s,s];
+            for (int i = 0; i < s; i++)
             {
-                array[i] = codigo[Array.IndexOf(codigo, "a-") + 1 + i];
+                for (int ii = 0; ii < s; ii++)
+                {
+                    array[i, ii] = codigo[4 + i * s + ii];
+                }
             }
             Bitmap imagen = new Bitmap(480, 320);
             Graphics grafico = Graphics.FromImage(imagen);
-            Bitmap dibujo = new Bitmap(300,300);
+            Bitmap dibujo = new Bitmap(501,501);
             Graphics gfx = Graphics.FromImage(dibujo);
-            grafico.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             Image bck = new Bitmap(QR_Imagenes.Properties.Resources.Mcbck);
             grafico.DrawImage(bck,0,0,480,320);
-            int temper = 0;
-            int sq = 300 / s, x = 0, y = 0;
+            int sq = 500 / s, x = 0, y = 0;
+            string tmpcolor ="0";
             Color valuecolor = Color.White;
             for (int i = 0; i < s; i++)
             {
-                y = i * sq;
                 for (int ii = 0; ii < s; ii++)
                 {
-                    x = ii * sq;
-                    valuecolor = ColorTranslator.FromHtml(array[temper]);
-                    gfx.FillRectangle(new SolidBrush(valuecolor), x, y, sq, sq);
-                    gfx.DrawRectangle(new Pen(valuecolor), x, y, sq, sq);
-                    temper++;
+                    tmpcolor = array[i, ii];
+                    switch (tmpcolor)
+                    {
+                        case "w": valuecolor = Color.White; break;
+                        case "b": valuecolor = Color.Black; break;
+                        case "t": valuecolor = Color.Transparent; break;
+                        default:
+                            valuecolor = ColorTranslator.FromHtml(pals[p,int.Parse(tmpcolor)]);
+                            break;
+                    }
+                    gfx.FillRectangle(new SolidBrush(valuecolor),i*sq,ii*sq,sq,sq);
                 }
             }
+            Point izqsup = new Point(0, 0);//0
+            Point dersup = new Point(sq * s, 0);//1
+            Point izqinf = new Point(0, sq * s);//2
+            Point derinf = new Point(sq * s, sq * s);//3
+            gfx.DrawLine(new Pen(Color.Black), izqsup, dersup);//0 1
+            gfx.DrawLine(new Pen(Color.Black), izqinf, derinf);//2 3
+            gfx.DrawLine(new Pen(Color.Black), izqsup, izqinf);//0 2
+            gfx.DrawLine(new Pen(Color.Black), dersup, derinf);//1 3
             grafico.DrawImage(dibujo, 5, 5, 300, 300);
-            int dif = 305;//45 + (sq * s) + (sq + x);
-            grafico.DrawLine(new Pen(Color.Black, 3), 5, 5, dif, 5);
-            grafico.DrawLine(new Pen(Color.Black, 3), 5, 5, 5, dif);
-            grafico.DrawLine(new Pen(Color.Black, 3), dif,5,dif, dif);
-            grafico.DrawLine(new Pen(Color.Black, 3), 5, dif, dif, dif);
             grafico.DrawImage(qr, 320, 5, 150, 150);
             grafico.DrawString("Dimension :", new Font("Times New Roman", 14), new SolidBrush(Color.Black), 320, 170);
             grafico.DrawString(s + " x " + s, new Font("Times New Roman", 13, FontStyle.Italic), new SolidBrush(Color.Black), 320, 190);
