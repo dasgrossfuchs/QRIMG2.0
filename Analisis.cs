@@ -14,54 +14,64 @@ namespace QR_Imagenes
 {
     class Analisis
     {
-        public string Codigo { get; set; } //codigo recibido
         public int Error { get; set; } //tipo de error.
-        string[] arreglocodigo; //codigo por partes
+        public string Codigo { get; set; } //codigo recibido
+        public string[] Acodigo { get; set; } //codigo por partes
+        public string[] Datos { get; set; }
+        public string[] Pixeles { get; set; }
+        public int Tamaño { get; set; }//Tamaño
+        int s = 0;
 
         public Analisis(string codigo)
         {
             Error = 0;
             Codigo = codigo;
-            if (Codigo.Contains(",")) { arreglocodigo = Codigo.Split(',');}
-            else{ Error=1;return;}
+            Lexico();
             Sintactico();
+            Semantico();
         }
         public void Sintactico()
         {
-            if (arreglocodigo[0] != "qrimg")
+            if (Acodigo.Length != (4 + Tamaño ^ 2)) { Error = 2; return; }
+            if (!Codigo.Contains(",")) { Error = 1; return; }
+            if (Acodigo[0] != "qrimg")
             {Error = 1;return;}
-            Semantico();
         }
         public void Semantico()
         {
-            int s;
-            bool logro = int.TryParse(arreglocodigo[2], out s);
+            bool logro = int.TryParse(Acodigo[2], out s);
             if (!logro)
             { Error = 2; return; }
-            if (arreglocodigo.Length != 4 + s * s)
+            if (Acodigo.Length != 4 + s * s)
             { Error = 2; return; }
             for (int x = 0; x < s * s; x++)
             {
-                string val = arreglocodigo[4 + x];
-                int temp = 69;
+                string val = Acodigo[4 + x];
+                int temp = 50;
                 int.TryParse(val, out temp);
                 if (!(val == "w" || val == "t" || val == "b" || temp >= 0 || temp <= 11))
                 { Error = 2; return; }
             }
-            Lexico();
         }
         public void Lexico() 
         {
-            int s;
-            bool logro = int.TryParse(arreglocodigo[2], out s);
-            if (!logro)
-            { Error = 2; return; }
-            if (arreglocodigo.Length != 4 + s * s)
-            { Error = 2; return; }
-            for (int x = 0; x < s * s; x++)
+
+            if (!Codigo.Contains(",")){ Error = 1; return; }
+            Acodigo = Codigo.Split(',');
+            Datos = new string[4];
+            for (int i = 0; i < 5; i++){Datos[i] = Acodigo[i];}
+
+            bool logro = int.TryParse(Datos[2], out int temp);
+            if (!logro) { Error = 2; return;}
+            Tamaño = temp;
+
+            if (Acodigo.Length != (4 + Tamaño ^ 2)) {Error = 2; return; }
+            Pixeles = new string[Tamaño ^ 2];
+
+            for (int i = 0; i < Pixeles.Length; i++)
             {
-                string val = arreglocodigo[4 + x];
-                int temp = 69;
+                string val = Acodigo[4 + i];
+                temp = 50;
                 int.TryParse(val, out temp);
                 if (!(val == "w" || val == "t" || val == "b" || temp >= 0 || temp <= 11))
                 { Error = 3; return; }

@@ -238,7 +238,6 @@ namespace QR_Imagenes
         {
             Point coor = imagenvista.PointToClient(Cursor.Position);
             double stp = Convert.ToDouble(imagenvista.Width) / Convert.ToDouble(size);
-            //ME CAGA LA LOGICA DE ESTO PERO BUENO
             int x = Convert.ToInt32(Math.Floor(Convert.ToDouble(coor.X) / stp));
             int y = Convert.ToInt32(Math.Floor(Convert.ToDouble(coor.Y) / stp));
             string color= selcol;
@@ -262,7 +261,6 @@ namespace QR_Imagenes
             {
                 Point coor = imagenvista.PointToClient(Cursor.Position);
                 double stp = Convert.ToDouble(imagenvista.Width) / Convert.ToDouble(size);
-                //ME CAGA LA LOGICA DE ESTO PERO BUENO
                 int x = Convert.ToInt32(Math.Floor(Convert.ToDouble(coor.X) / stp));
                 int y = Convert.ToInt32(Math.Floor(Convert.ToDouble(coor.Y) / stp));
                 string color = selcol;
