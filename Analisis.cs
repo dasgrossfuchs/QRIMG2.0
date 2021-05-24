@@ -20,7 +20,6 @@ namespace QR_Imagenes
         public string[] Datos { get; set; }
         public string[] Pixeles { get; set; }
         public int Tamaño { get; set; }//Tamaño
-        int s = 0;
 
         public Analisis(string codigo)
         {
@@ -29,33 +28,10 @@ namespace QR_Imagenes
             Lexico();
             Sintactico();
             Semantico();
-        }
-        public void Sintactico()
-        {
-            if (Acodigo.Length != (4 + Tamaño ^ 2)) { Error = 2; return; }
-            if (!Codigo.Contains(",")) { Error = 1; return; }
-            if (Acodigo[0] != "qrimg")
-            {Error = 1;return;}
-        }
-        public void Semantico()
-        {
-            bool logro = int.TryParse(Acodigo[2], out s);
-            if (!logro)
-            { Error = 2; return; }
-            if (Acodigo.Length != 4 + s * s)
-            { Error = 2; return; }
-            for (int x = 0; x < s * s; x++)
-            {
-                string val = Acodigo[4 + x];
-                int temp = 50;
-                int.TryParse(val, out temp);
-                if (!(val == "w" || val == "t" || val == "b" || temp >= 0 || temp <= 11))
-                { Error = 2; return; }
-            }
+            Finalizador();
         }
         public void Lexico() 
         {
-
             if (!Codigo.Contains(",")){ Error = 1; return; }
             Acodigo = Codigo.Split(',');
             Datos = new string[4];
@@ -77,6 +53,34 @@ namespace QR_Imagenes
                 { Error = 3; return; }
             }
         }
-        //Analizadores Fin
+        public void Sintactico()
+        {
+            if (Acodigo.Length != (4 + Tamaño ^ 2)) { Error = 2; return; }
+            if (!Codigo.Contains(",")) { Error = 1; return; }
+            if (Acodigo[0] != "qrimg")
+            {Error = 1;return;}
+        }
+        public void Semantico()
+        {
+            bool logro = int.TryParse(Acodigo[2], out int s);
+            if (!logro){ Error = 2; return;}
+            if (Acodigo.Length !=( 4 + Tamaño ^ 2)){ Error = 2; return; }
+
+            for (int x = 0; x < Pixeles.Length; x++)
+            {
+                string val = Acodigo[4 + x];
+                int temp = 50;
+                int.TryParse(val, out temp);
+                if (!(val == "w" || val == "t" || val == "b" || temp >= 0 || temp <= 11))
+                { Error = 2; return; }
+            }
+        }
+        public void Finalizador()
+        {
+            Acodigo = Codigo.Split(',');
+            Array.Copy(Acodigo,1,Datos,0,3);
+            Tamaño = int.Parse(Acodigo[2]);
+            Array.Copy(Acodigo,4,Pixeles,0,(Tamaño ^ 2));
+        }
     }
 }
