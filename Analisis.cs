@@ -32,39 +32,26 @@ namespace QR_Imagenes
         }
         public void Lexico() 
         {
+            // SE CREA UNA TABLA QUE CONTIENE LOS VALORES UTILIZADOS EN EL CODIGO
             if (!Codigo.Contains(",")){ Error = 1; return; }
             Acodigo = Codigo.Split(',');
-            Datos = new string[4];
-            for (int i = 0; i < 5; i++){Datos[i] = Acodigo[i];}
-
-            bool logro = int.TryParse(Datos[2], out int temp);
-            if (!logro) { Error = 2; return;}
-            Tamaño = temp;
-
-            if (Acodigo.Length != (4 + Tamaño ^ 2)) {Error = 2; return; }
-            Pixeles = new string[Tamaño ^ 2];
-
-            for (int i = 0; i < Pixeles.Length; i++)
-            {
-                string val = Acodigo[4 + i];
-                temp = 50;
-                int.TryParse(val, out temp);
-                if (!(val == "w" || val == "t" || val == "b" || temp >= 0 || temp <= 11))
-                { Error = 3; return; }
-            }
         }
         public void Sintactico()
         {
-            if (Acodigo.Length != (4 + Tamaño ^ 2)) { Error = 2; return; }
-            if (!Codigo.Contains(",")) { Error = 1; return; }
-            if (Acodigo[0] != "qrimg")
-            {Error = 1;return;}
+            // SE ORGANIZAN LOS DATOS OBTENIDOS DEL CODIGO
+            Datos = new string[4];
+            for (int i = 0; i < 4; i++) { Datos[i] = Acodigo[i]; }
+
+            bool logro = int.TryParse(Datos[2], out int temp);
+            if (!logro) { Error = 2; return; }
+            Tamaño = temp;
+
+            if (Acodigo.Length != (4 + Math.Pow(Tamaño, 2))) { Error = 2; return; }
+            Pixeles = new string[Convert.ToInt32(Math.Pow(Tamaño, 2))];
         }
         public void Semantico()
         {
-            bool logro = int.TryParse(Acodigo[2], out int s);
-            if (!logro){ Error = 2; return;}
-            if (Acodigo.Length !=( 4 + Tamaño ^ 2)){ Error = 2; return; }
+            // SE VERIFICA QUE LOS TIPOS DE DATO Y SUS LUGARES SEAN CORRECTOS
 
             for (int x = 0; x < Pixeles.Length; x++)
             {
@@ -72,15 +59,15 @@ namespace QR_Imagenes
                 int temp = 50;
                 int.TryParse(val, out temp);
                 if (!(val == "w" || val == "t" || val == "b" || temp >= 0 || temp <= 11))
-                { Error = 2; return; }
+                { Error = 3; return; }
             }
         }
         public void Finalizador()
         {
             Acodigo = Codigo.Split(',');
-            Array.Copy(Acodigo,1,Datos,0,3);
+            Array.Copy(Acodigo, 1, Datos, 0, 3);
             Tamaño = int.Parse(Acodigo[2]);
-            Array.Copy(Acodigo,4,Pixeles,0,(Tamaño ^ 2));
+            Array.Copy(Acodigo, 4, Pixeles, 0, Convert.ToInt32(Math.Pow(Tamaño, 2)));
         }
     }
 }

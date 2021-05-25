@@ -107,6 +107,7 @@ namespace QR_Imagenes
             // 
             // imagenvista
             // 
+            this.imagenvista.BackColor = System.Drawing.Color.Transparent;
             this.imagenvista.Location = new System.Drawing.Point(12, 12);
             this.imagenvista.Name = "imagenvista";
             this.imagenvista.Size = new System.Drawing.Size(400, 400);

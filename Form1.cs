@@ -112,7 +112,8 @@ namespace QR_Imagenes
                     }
                 }
             }
-            else {
+            else
+            {
                 string[,] px2tmp = new string[pixl2.GetLength(0), pixl2.GetLength(1)];
                 for (int i = 0; i < pixl2.GetLength(0); i++)
                 {
@@ -174,7 +175,7 @@ namespace QR_Imagenes
                 }
             }
             for (float i = 0; i < size + 1; i++)
-            {
+            {   
                 gfx.DrawLine(new Pen(Color.Black, 2), 0f, i * step, 500f, i * step);
                 gfx.DrawLine(new Pen(Color.Black, 2), i * step, 0f, i * step, 500f);
             }
@@ -186,9 +187,9 @@ namespace QR_Imagenes
         }
         public void updater(int x, int y) 
         {
+            Image img = imagenvista.Image;
             float step = 500f / size;
             float hstep = 500f / size / 2;
-            Image img = imagenvista.Image;
             Graphics gfx = Graphics.FromImage(img);
             switch (pixl2[x, y])
             {
@@ -368,7 +369,9 @@ namespace QR_Imagenes
                 }
                 fs.Close();
                 sf.Dispose();
+                
             }
+            cuadricular2();
         }
         private void comboBox1_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -410,96 +413,6 @@ namespace QR_Imagenes
                     break;
             }
         }
-        /// VERSION1 no actualizado
-        //public void cuadricular()
-        //{
-        //    size = dimension.SelectedIndex + 1;
-        //    pixel = new string[size * size];
-        //    pxl = new PictureBox[size * size];
-        //    for (int i = 0; i < size * size; i++)
-        //    {
-        //        pixel[i] = "t";
-        //    }
-        //    int w = panel1.Width / size;
-        //    int cont = 0;
-        //    for (int i = 0; i < size; i++)
-        //    {
-        //        for (int ii = 0; ii < size; ii++)
-        //        {
-
-        //            int x = panel1.Location.X + (w * ii);
-        //            int y = panel1.Location.Y + (w * i);
-        //            pxl[cont] = new PictureBox();
-        //            pxl[cont].Size = new Size(w, w);
-        //            pxl[cont].Location = new Point(x, y);
-        //            pxl[cont].Name = ii + 1 + "," + i + 1;
-        //            pxl[cont].BorderStyle = BorderStyle.FixedSingle;
-        //            pxl[cont].SizeMode = PictureBoxSizeMode.StretchImage;
-        //            pxl[cont].MouseClick += clickcuadro;
-        //            this.Controls.Add(pxl[cont]);
-        //            toolTip.SetToolTip(pxl[cont], (ii + 1) + "," + (i + 1));
-        //            cont++;
-        //        }
-        //    }
-        //    panel1.SendToBack();
-        //    actualizardibujo();
-        //} //Deprecated
-        //public Image img(string value) //Se vuelve innecesario con nueva version
-        //{
-        //    Bitmap imagen = new Bitmap(16, 16);
-        //    Graphics grafico = Graphics.FromImage(imagen);
-        //    grafico.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-        //    if (value == "t")
-        //    {
-        //        grafico.FillRectangle(new SolidBrush(Color.Gray), 0, 0, 8, 8);
-        //        grafico.FillRectangle(new SolidBrush(Color.Gray), 8, 8, 8, 8);
-        //        grafico.FillRectangle(new SolidBrush(Color.White), 8, 0, 8, 8);
-        //        grafico.FillRectangle(new SolidBrush(Color.White), 0, 8, 8, 8);
-
-        //    }
-        //    else
-        //    {
-        //        Color valuecolor = ColorTranslator.FromHtml(value);
-        //        grafico.FillRectangle(new SolidBrush(valuecolor), 0, 0, 15, 15);
-        //        grafico.DrawRectangle(new Pen(valuecolor), 0, 0, 15, 15);
-        //    }
-        //    return imagen;
-        //}
-        //public Image Completa(string[] array) //guardar imagen- es innecesario con nueva version. o requiere utilizar bg de panel1
-        //{
-        //    Bitmap imagen = new Bitmap(size * imagenvista.Width, size * imagenvista.Width);
-        //    Graphics grafico = Graphics.FromImage(imagen);
-        //    grafico.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-        //    int temper = 0;
-        //    int sq = panel1.Width / size, x = 0, y = 0;
-        //    Color valuecolor = Color.White;
-        //    for (int i = 0; i < size; i++)
-        //    {
-        //        y = i * sq;
-        //        for (int ii = 0; ii < size; ii++)
-        //        {
-        //            x = ii * sq;
-        //            if (array[temper] != "t")
-        //            {
-        //                valuecolor = ColorTranslator.FromHtml(array[temper]);
-        //            }
-        //            else { valuecolor = ColorTranslator.FromHtml("#FFFFFF"); }
-        //            grafico.FillRectangle(new SolidBrush(valuecolor), x, y, sq, sq);
-        //            grafico.DrawRectangle(new Pen(valuecolor), x, y, sq, sq);
-        //            temper++;
-        //        }
-        //    }
-        //    return imagen;
-        //}
-        //public void actualizardibujo()//deprecated
-        //{
-        //    for (int i = 0; i < size * size; i++)
-        //    {
-        //        pxl[i].Image = img(pixel[i]);
-        //        pxl[i].Refresh();
-        //    }
-        //    actualizarcadena();
-        //}
         private void botoncargar_Click(object sender, EventArgs e)
         {
             try
@@ -515,6 +428,7 @@ namespace QR_Imagenes
                     img = new Bitmap(of.FileName);
                     byte[][] DataByteArray = qd.ImageDecoder(new Bitmap(of.FileName));
                     codigo = QRDecoder.ByteArrayToStr(DataByteArray[0]);
+                    of.OpenFile().Close();
                     of.Dispose();
                     Analisis analisis = new Analisis(codigo);
                     if (analisis.Error != 0)
@@ -560,7 +474,7 @@ namespace QR_Imagenes
             DialogResult dr = MessageBox.Show("Los cambios no seran guardados, esta seguro que desea salir?", "Salir?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (dr == DialogResult.Yes)
             {
-                System.Environment.Exit(0);
+                System.Environment.Exit(1);
             }
         }
         private void botonayuda_Click(object sender, EventArgs e)
