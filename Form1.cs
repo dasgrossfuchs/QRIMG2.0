@@ -522,8 +522,8 @@ namespace QR_Imagenes
         }
         private void botoncargar_Click(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 QRDecoder qd = new QRDecoder();
                 Image img;
                 OpenFileDialog of = new OpenFileDialog();
@@ -570,11 +570,11 @@ namespace QR_Imagenes
                         form2.Dispose();
                     }
                 }
-            }
-            catch (Exception)
-            {
-                Errorentrada(5);
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    Errorentrada(5);
+            //}
         }
         private void botonsalir_Click(object sender, EventArgs e)
         {
@@ -630,13 +630,13 @@ namespace QR_Imagenes
             switch (error)
             {
                 case 1:
-                    MessageBox.Show("El codigo no tiene la estructura correcta", "Error de Sintaxis");
+                    MessageBox.Show("Los colores no estan en el formato correcto", "Error Lexico");
                     break;
                 case 2:
-                    MessageBox.Show("El codigo no tiene congruencia entre componentes", "Error de Semantica");
+                    MessageBox.Show("El codigo no tiene la estructura correcta", "Error de Sintaxis");
                     break;
                 case 3:
-                    MessageBox.Show("Los colores no estan en el formato correcto", "Error Lexico");
+                    MessageBox.Show("El codigo no tiene congruencia entre componentes", "Error de Semantica");
                     break;
                 case 4:
                     MessageBox.Show("", "Error");

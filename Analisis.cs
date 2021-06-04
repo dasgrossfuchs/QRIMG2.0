@@ -26,9 +26,13 @@ namespace QR_Imagenes
             Error = 0;
             Codigo = codigo;
             Lexico();
+            if (Error != 0){return;}
             Sintactico();
+            if (Error != 0) { return; }
             Semantico();
+            if (Error != 0) { return; }
             Finalizador();
+            if (Error != 0) { return; }
         }
         public void Lexico() 
         {
@@ -57,8 +61,13 @@ namespace QR_Imagenes
             {
                 string val = Acodigo[4 + x];
                 int temp = 50;
-                int.TryParse(val, out temp);
-                if (!(val == "w" || val == "t" || val == "b" || temp >= 0 || temp <= 11))
+                bool logro = int.TryParse(val, out temp);
+                if (logro)
+                {
+                    if (!(temp >= 0 || temp <= 11))
+                    { Error = 3; return; }
+                }
+                else if (!(val == "w" || val == "t" || val == "b"))
                 { Error = 3; return; }
             }
         }
