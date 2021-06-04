@@ -158,5 +158,77 @@
   <ItemGroup>
     <None Include="Resources\ayuda.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MAIN_bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnsave_ayuda.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnface_save_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnface_save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnface_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnface_load.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnface_exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnface_cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_save_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_load.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn_ayuda.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Untitled Diagram.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help-full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help-name.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help-size.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help-sel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help-code.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help-color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help-draw.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

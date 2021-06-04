@@ -24,6 +24,8 @@ namespace QR_Imagenes
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.DrawMode = DrawMode.OwnerDrawFixed;
         }
+        bool helping = false;
+        string drawString = "";
         string cadena;
         string[,] pixl2;
         string[,] Paletas = new string[0,0];
@@ -37,7 +39,11 @@ namespace QR_Imagenes
             CargaPaleta();
             Coloreta();
             cuadricular2();
+            CargaAyuda();
         }
+        /*
+         * FUNCIONES DE CARGA Y ACTUALIZACION
+         */
         public void CargaPaleta() 
         {
             string path = @"prueba.csv";
@@ -98,7 +104,7 @@ namespace QR_Imagenes
             button11.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(11));
             button12.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(12));
         }
-        public void cuadricular2() //Falta implementar diccionario
+        public void cuadricular2() 
         {
             size = int.Parse(dimension.SelectedItem.ToString().Split('x').ElementAt(0));
             if (pixl2 == null)
@@ -181,8 +187,6 @@ namespace QR_Imagenes
             }
             imagenvista.Image = img;
             actualizarcadena();
-            //if (panel1.BackgroundImage == null) { panel1.BackgroundImage = img; }
-            //else { panel1.BackgroundImage.Dispose(); panel1.BackgroundImage = img; }
 
         }
         public void updater(int x, int y) 
@@ -235,6 +239,109 @@ namespace QR_Imagenes
             }
             actualizarqr();
         }
+        public void actualizarqr()
+        {
+            QRCodeEncoder qce = new QRCodeEncoder();
+            qce.ErrorCorrection = QRCodeEncoderLibrary.ErrorCorrection.L;
+            qce.ModuleSize = 4;
+            qce.QuietZone = 16;
+            qce.Encode(cadena);
+            pictureBox1.Image = qce.CreateQRCodeBitmap();
+        }
+        private void colorSeleccionado()
+        {
+            int x = 10;
+            Bitmap img = new Bitmap(20, 20);
+            Graphics gfx = Graphics.FromImage(img);
+            switch (selcol)
+            {
+                case "t":
+                    gfx.FillRectangle(new SolidBrush(Color.Gray), 0, 0, x, x);
+                    gfx.FillRectangle(new SolidBrush(Color.Gray), x, x, x, x);
+                    gfx.FillRectangle(new SolidBrush(Color.White), x, 0, x, x);
+                    gfx.FillRectangle(new SolidBrush(Color.White), 0, x, x, x);
+                    drawString = "Transparente";
+                    break;
+                case "w":
+                    gfx.FillRectangle(new SolidBrush(Color.White), 0, 0, 20, 20);
+                    drawString = "#FFFFFF";
+                    break;
+                case "b":
+                    selcol = "b";
+                    gfx.FillRectangle(new SolidBrush(Color.Black), 0, 0, 20, 20);
+                    drawString = "#000000";
+                    break;
+                case "s":
+                    gfx.FillRectangle(new SolidBrush(Color.Transparent), 0, 0, 20, 20);
+                    drawString = "Seleccionando...";
+                    break;
+                default:
+                    drawString = Paletas[selpal, int.Parse(selcol)];
+                    Color tmpcolor = ColorTranslator.FromHtml(drawString);
+                    gfx.FillRectangle(new SolidBrush(tmpcolor), 0, 0, 20, 20);
+                    break;
+            }
+            label5.Text = drawString;
+            pictureBox2.BackgroundImage = img;
+        }
+        public void CargaAyuda()
+        {
+            if (helping) 
+            {
+                pbhelpcode.Show();
+                pbhelpcode.BringToFront();
+                pbhelpcolor.Show();
+                pbhelpcolor.BringToFront();
+                pbhelpdraw.Show();
+                pbhelpdraw.BringToFront();
+                pbhelpname.Show();
+                pbhelpname.BringToFront();
+                pbhelpsel.Show();
+                pbhelpsel.BringToFront();
+                pbhelpsize.Show();
+                pbhelpsize.BringToFront();
+            }
+            else
+            {
+                pbhelpcode.Hide();
+                pbhelpcode.SendToBack();
+                pbhelpcolor.Hide();
+                pbhelpcolor.SendToBack();
+                pbhelpdraw.Hide();
+                pbhelpdraw.SendToBack();
+                pbhelpname.Hide();
+                pbhelpname.SendToBack();
+                pbhelpsel.Hide();
+                pbhelpsel.SendToBack();
+                pbhelpsize.Hide();
+                pbhelpsize.SendToBack();
+            }
+            botonayuda.Enabled = !helping;
+            botoncargar.Enabled = !helping;
+            botonguardar.Enabled = !helping;
+            botonguardarimagen.Enabled = !helping;
+            botonsalir.Enabled = !helping;
+            button1.Enabled = !helping;
+            button2.Enabled = !helping;
+            button3.Enabled = !helping;
+            button4.Enabled = !helping;
+            button5.Enabled = !helping;
+            button6.Enabled = !helping;
+            button7.Enabled = !helping;
+            button8.Enabled = !helping;
+            button9.Enabled = !helping;
+            button10.Enabled = !helping;
+            button11.Enabled = !helping;
+            button12.Enabled = !helping;
+            button13.Enabled = !helping;
+            button14.Enabled = !helping;
+            button15.Enabled = !helping;
+            button16.Enabled = !helping;
+            comboBox1.Enabled = !helping;
+        }
+        /*
+         * TODOS LOS EVENTOS
+         */
         private void imagenvista_Click(object sender, EventArgs e)
         {
             Point coor = imagenvista.PointToClient(Cursor.Position);
@@ -244,7 +351,7 @@ namespace QR_Imagenes
             string color= selcol;
             if (color != "s")
             {
-                if (x < pixl2.GetLength(0) && y < pixl2.GetLength(1) && x >= 0 && y >= 0 && pixl2[x, y] != color)
+                if (x < pixl2.GetLength(0) && y < pixl2.GetLength(1) && x >= 0 && y >= 0 && pixl2[x, y] != color && helping == false)
                 {
                     pixl2[x, y] = color;// utilizar color seleccionado aqui, a partir de los colores de las bibliotecas.
                     updater(x, y);
@@ -252,9 +359,17 @@ namespace QR_Imagenes
             }
             else
             {
-                selcol = pixl2[x, y];
+                if (helping == false)
+                {
+                    selcol = pixl2[x, y];
+                }
             }
-            
+            colorSeleccionado();
+            if (helping == true)
+            {
+                helping = false;
+                CargaAyuda();
+            }
         }
         private void imagenvista_MouseMove(object sender, MouseEventArgs e)
         {
@@ -278,7 +393,6 @@ namespace QR_Imagenes
         {
             if (size == 0)
             {
-                //cuadricular();
                 cuadricular2();
                 return; }
             if (dimension.SelectedIndex == size - 1)
@@ -298,15 +412,6 @@ namespace QR_Imagenes
             {
                 e.Handled = true;
             }
-        }
-        public void actualizarqr()
-        {
-            QRCodeEncoder qce = new QRCodeEncoder();
-            qce.ErrorCorrection = QRCodeEncoderLibrary.ErrorCorrection.L;
-            qce.ModuleSize = 4;
-            qce.QuietZone = 16;
-            qce.Encode(cadena);
-            pictureBox1.Image = qce.CreateQRCodeBitmap();
         }
         private void botonguardar_Click(object sender, EventArgs e)
         {
@@ -397,7 +502,7 @@ namespace QR_Imagenes
                     updater(x,y);
                 }
             }
-
+            colorSeleccionado();
         }
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -412,6 +517,8 @@ namespace QR_Imagenes
                     selcol = color.ToString();
                     break;
             }
+
+            colorSeleccionado();
         }
         private void botoncargar_Click(object sender, EventArgs e)
         {
@@ -479,27 +586,45 @@ namespace QR_Imagenes
         }
         private void botonayuda_Click(object sender, EventArgs e)
         {
-            Form3 f3 = new Form3();
-            f3.FormBorderStyle = FormBorderStyle.None;
-            f3.StartPosition = FormStartPosition.CenterParent;
-            f3.ShowDialog();
-            f3.Dispose();
+            helping = true;
+            CargaAyuda();
         }
-        // Errores
-        /* Proceso Errorentrada
-         * Llama Messagebox en caso de encontrar errores en el proceso de analisis
-         */
-        /*Glosario de errores de entrada
-         *  -1 Error sintactico
-         *      El codigo ingresado no tiene la estructura 
-         *      correcta, por lo que no puede ser procesado.
-         *  -2 Error Semantico
-         *      El codigo no tiene congruencia entre sus
-         *      componentes.
-         *  -3 Error lexico
-         *      El codigo contiene palabras no reconocidas, codigos de colores ilegales
-         *      o no esta en formato hexadecimal.
-         */
+        private void imagenvista_MouseLeave(object sender, MouseEventArgs e)
+        {
+            md = false;
+        }
+        public void Errorentrada(string mensaje)
+        {
+            MessageBox.Show(mensaje, "Error no controlado");
+        }
+
+        private void Form1_Click(object sender, EventArgs e)
+        {
+            helping = false;
+            CargaAyuda();
+        }
+
+        private void pbhelpdraw_Click(object sender, EventArgs e)
+        {
+            helping = false;
+            CargaAyuda();
+        }
+
+        /* Errores
+* Proceso Errorentrada
+* Llama Messagebox en caso de encontrar errores en el proceso de analisis
+*
+*Glosario de errores de entrada
+*  -1 Error sintactico
+*      El codigo ingresado no tiene la estructura 
+*      correcta, por lo que no puede ser procesado.
+*  -2 Error Semantico
+*      El codigo no tiene congruencia entre sus
+*      componentes.
+*  -3 Error lexico
+*      El codigo contiene palabras no reconocidas, codigos de colores ilegales
+*      o no esta en formato hexadecimal.
+*/
         public void Errorentrada(int error)
         {
             switch (error)
@@ -522,12 +647,6 @@ namespace QR_Imagenes
                 default:
                     break;
             }
-        }
-
-
-        public void Errorentrada(string mensaje)
-        {
-            MessageBox.Show(mensaje, "Error no controlado");
         }
 
 
