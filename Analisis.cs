@@ -1,14 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 
 namespace QR_Imagenes
 {
@@ -60,8 +50,7 @@ namespace QR_Imagenes
             for (int x = 0; x < Pixeles.Length; x++)
             {
                 string val = Acodigo[4 + x];
-                int temp = 50;
-                bool logro = int.TryParse(val, out temp);
+                bool logro = int.TryParse(val, out int temp);
                 if (logro)
                 {
                     if (!(temp >= 0 || temp <= 11))

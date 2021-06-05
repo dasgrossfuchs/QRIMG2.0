@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading;
-using ColorPickerWPF;
 using System.IO;
 using QRCodeEncoderLibrary;
 using QRCodeDecoderLibrary;
@@ -38,7 +31,7 @@ namespace QR_Imagenes
             dimension.SelectedIndex = 15;
             CargaPaleta();
             Coloreta();
-            cuadricular2();
+            Cuadricular2();
             CargaAyuda();
         }
         /*
@@ -46,16 +39,31 @@ namespace QR_Imagenes
          */
         public void CargaPaleta() 
         {
-            string path = @"prueba.csv";
-            string[] csv = File.ReadAllLines(path);
-                Paletas = new string[csv.Length-1,13];
-            for (int i = 1; i < csv.Length; i++)
+            string[] Recursos = new string[16];
+            Recursos[0] = Properties.Resources.P1;
+            Recursos[1] = Properties.Resources.P2;
+            Recursos[2] = Properties.Resources.P3;
+            Recursos[3] = Properties.Resources.P4;
+            Recursos[4] = Properties.Resources.P5;
+            Recursos[5] = Properties.Resources.P6;
+            Recursos[6] = Properties.Resources.P7;
+            Recursos[7] = Properties.Resources.P8;
+            Recursos[8] = Properties.Resources.P9;
+            Recursos[9] = Properties.Resources.P10;
+            Recursos[10] = Properties.Resources.P11;
+            Recursos[11] = Properties.Resources.P12;
+            Recursos[12] = Properties.Resources.P13;
+            Recursos[13] = Properties.Resources.P14;
+            Recursos[14] = Properties.Resources.P15;
+            Recursos[15] = Properties.Resources.P16;
+            Paletas = new string[16,12];
+            for (int i = 0; i < 16; i++)
             {
-                comboBox1.Items.Add(csv[i]);
-                string[] paletatemp = csv[i].Split(',');
-                for (int ii = 1; ii < 14; ii++)
+                comboBox1.Items.Add(Recursos[i]);
+                string[] tempColor = Recursos[i].Split(',');
+                for (int ii = 0; ii < 12; ii++)
                 {
-                    Paletas[i - 1, ii - 1] = paletatemp[ii];
+                    Paletas[i, ii] = tempColor[ii];
                 }
             }
             for (int i = 0; i < Paletas.GetLength(0); i++)
@@ -64,7 +72,7 @@ namespace QR_Imagenes
                 int y = 20;
                 Bitmap img = new Bitmap(x,y);
                 Graphics gfx = Graphics.FromImage(img);
-                for (int ii = 0; ii < 13; ii++)
+                for (int ii = 0; ii < 12; ii++)
                 {
                     gfx.FillRectangle(new SolidBrush(ColorTranslator.FromHtml(Paletas[i,ii])), ii * x/12, 0, x / 12, y);
                     gfx.DrawLine(new Pen(Color.Black),0,0,x,0);
@@ -91,20 +99,20 @@ namespace QR_Imagenes
             button14.BackColor = Color.White;
             button15.BackColor = Color.Black;
             button15.BackColor = Color.Black;
-            button1.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(1));
-            button2.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(2));
-            button3.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(3));
-            button4.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(4));
-            button5.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(5));
-            button6.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(6));
-            button7.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(7));
-            button8.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(8));
-            button9.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(9));
-            button10.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(10));
-            button11.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(11));
-            button12.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(12));
+            button1.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(0));
+            button2.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(1));
+            button3.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(2));
+            button4.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(3));
+            button5.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(4));
+            button6.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(5));
+            button7.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(6));
+            button8.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(7));
+            button9.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(8));
+            button10.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(9));
+            button11.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(10));
+            button12.BackColor = ColorTranslator.FromHtml(comboBox1.SelectedItem.ToString().Split(',').ElementAt(11));
         }
-        public void cuadricular2() 
+        public void Cuadricular2() 
         {
             size = int.Parse(dimension.SelectedItem.ToString().Split('x').ElementAt(0));
             if (pixl2 == null)
@@ -186,10 +194,10 @@ namespace QR_Imagenes
                 gfx.DrawLine(new Pen(Color.Black, 2), i * step, 0f, i * step, 500f);
             }
             imagenvista.Image = img;
-            actualizarcadena();
+            Actualizarcadena();
 
         }
-        public void updater(int x, int y) 
+        public void Updater(int x, int y) 
         {
             Image img = imagenvista.Image;
             float step = 500f / size;
@@ -220,10 +228,10 @@ namespace QR_Imagenes
                 gfx.DrawLine(new Pen(Color.Black, 2), i * step, 0f, i * step, 500f);
             }
             imagenvista.Image = img;
-            actualizarcadena();
+            Actualizarcadena();
 
         }
-        public void actualizarcadena()//
+        public void Actualizarcadena()//
         {
             if (string.IsNullOrEmpty(textBox1.Text))//0
             {
@@ -237,18 +245,19 @@ namespace QR_Imagenes
                     cadena = cadena + "," + pixl2[i, ii];
                 }
             }
-            actualizarqr();
+            Actualizarqr();
         }
-        public void actualizarqr()
+        public void Actualizarqr()
         {
-            QRCodeEncoder qce = new QRCodeEncoder();
-            qce.ErrorCorrection = QRCodeEncoderLibrary.ErrorCorrection.L;
-            qce.ModuleSize = 4;
-            qce.QuietZone = 16;
+            QRCodeEncoder qce = new QRCodeEncoder() { 
+                ErrorCorrection = QRCodeEncoderLibrary.ErrorCorrection.L,
+                ModuleSize = 2,
+                QuietZone = 8
+            };
             qce.Encode(cadena);
             pictureBox1.Image = qce.CreateQRCodeBitmap();
         }
-        private void colorSeleccionado()
+        private void ColorSeleccionado()
         {
             int x = 10;
             Bitmap img = new Bitmap(20, 20);
@@ -354,7 +363,7 @@ namespace QR_Imagenes
                 if (x < pixl2.GetLength(0) && y < pixl2.GetLength(1) && x >= 0 && y >= 0 && pixl2[x, y] != color && helping == false)
                 {
                     pixl2[x, y] = color;// utilizar color seleccionado aqui, a partir de los colores de las bibliotecas.
-                    updater(x, y);
+                    Updater(x, y);
                 }
             }
             else
@@ -364,7 +373,7 @@ namespace QR_Imagenes
                     selcol = pixl2[x, y];
                 }
             }
-            colorSeleccionado();
+            ColorSeleccionado();
             if (helping == true)
             {
                 helping = false;
@@ -383,7 +392,7 @@ namespace QR_Imagenes
                 if (x < pixl2.GetLength(0) && y < pixl2.GetLength(1) && x >= 0 && y >= 0 && pixl2[x, y] != color && color != "s")
                 {
                     pixl2[x, y] = color;// utilizar color seleccionado aqui, a partir de los colores de las bibliotecas.
-                    updater(x, y);
+                    Updater(x, y);
                 }
             }
         }
@@ -393,14 +402,14 @@ namespace QR_Imagenes
         {
             if (size == 0)
             {
-                cuadricular2();
+                Cuadricular2();
                 return; }
             if (dimension.SelectedIndex == size - 1)
             { return; }
             DialogResult dr = MessageBox.Show("Es posible que los cambios no se guarden, deseas continuar?", "Redimensionar?", MessageBoxButtons.YesNo);
             if (dr == DialogResult.Yes)
             {
-                cuadricular2();
+                Cuadricular2();
             }
             else {
                 dimension.SelectedIndex = dimension.Items.IndexOf(size.ToString() + " x " + size.ToString());
@@ -415,18 +424,20 @@ namespace QR_Imagenes
         }
         private void botonguardar_Click(object sender, EventArgs e)
         {
-            actualizarcadena();
-            QRCodeEncoder qce = new QRCodeEncoder();
-            qce.ErrorCorrection = QRCodeEncoderLibrary.ErrorCorrection.L;
-            qce.ModuleSize = 4;
-            qce.QuietZone = 16;
+            Actualizarcadena();
+            QRCodeEncoder qce = new QRCodeEncoder() {
+                ErrorCorrection = QRCodeEncoderLibrary.ErrorCorrection.L,
+                ModuleSize = 1,
+                QuietZone = 4
+            };
             qce.Encode(cadena);
             Image qrcode = qce.CreateQRCodeBitmap();
 
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Title = "Guardar imagen";
-            sf.Filter = "PNG |*.png| JPEG |*.jpeg";
-            sf.FileName = "Codigo" + textBox1.Text;
+            SaveFileDialog sf = new SaveFileDialog() {
+                Title = "Guardar imagen",
+                Filter = "PNG |*.png| JPEG |*.jpeg",
+                FileName = "Codigo" + textBox1.Text
+            };
             if (sf.FileName != "" && sf.ShowDialog() == DialogResult.OK)
             {
 
@@ -452,11 +463,13 @@ namespace QR_Imagenes
         }
         private void botonguardarimagen_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Title = "Guardar imagen";
-            sf.Filter = "Bitmap|*.bmp|JPEG |*.jpeg|PNG |*.png";
-            sf.FilterIndex = 1;
-            sf.FileName = "ElDibujoDe" + textBox1.Text;
+            SaveFileDialog sf = new SaveFileDialog() {
+            Title = "Guardar imagen",
+            Filter = "Bitmap|*.bmp|JPEG |*.jpeg|PNG |*.png",
+            FilterIndex = 1,
+            FileName = "ElDibujoDe" + textBox1.Text,
+        };
+            
             if (sf.FileName != "" && sf.ShowDialog() == DialogResult.OK)
             {
                 System.IO.FileStream fs = (System.IO.FileStream)sf.OpenFile();
@@ -476,7 +489,7 @@ namespace QR_Imagenes
                 sf.Dispose();
                 
             }
-            cuadricular2();
+            Cuadricular2();
         }
         private void comboBox1_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -499,10 +512,10 @@ namespace QR_Imagenes
             {
                 for (int x = 0; x < size; x++)
                 {
-                    updater(x,y);
+                    Updater(x,y);
                 }
             }
-            colorSeleccionado();
+            ColorSeleccionado();
         }
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -518,7 +531,7 @@ namespace QR_Imagenes
                     break;
             }
 
-            colorSeleccionado();
+            ColorSeleccionado();
         }
         private void botoncargar_Click(object sender, EventArgs e)
         {
@@ -526,10 +539,12 @@ namespace QR_Imagenes
             //{
                 QRDecoder qd = new QRDecoder();
                 Image img;
-                OpenFileDialog of = new OpenFileDialog();
-                of.Title = "Abre el codigo QR";
-                of.Filter = "PNG | *.png|JPEG | *.jpeg";
-                string codigo = "";
+                OpenFileDialog of = new OpenFileDialog() {
+                    Title = "Abre el codigo QR",
+                    Filter = "PNG | *.png|JPEG | *.jpeg",
+                };
+                
+                string codigo;
                 if (of.ShowDialog() == DialogResult.OK)
                 {
                     img = new Bitmap(of.FileName);
@@ -545,8 +560,17 @@ namespace QR_Imagenes
                     }
                     else
                     {
-                        Form2 form2 = new Form2(img, codigo, Paletas);
-                        form2.StartPosition = FormStartPosition.CenterParent;
+                    QRCodeEncoder qce = new QRCodeEncoder()
+                    {
+                        ErrorCorrection = QRCodeEncoderLibrary.ErrorCorrection.L,
+                        ModuleSize = 4,
+                        QuietZone = 16
+                    };
+                    qce.Encode(codigo);
+                    Image qr = qce.CreateQRCodeBitmap();
+                    Form2 form2 = new Form2(qr, codigo, Paletas) {
+                        StartPosition = FormStartPosition.CenterParent,
+                    };
                         form2.ShowDialog();
                         if (form2.OKButtonClicked)
                         {
@@ -562,7 +586,7 @@ namespace QR_Imagenes
                                     {
                                         string color = codigo.Split(',').ElementAt(4 + y*size + x);
                                         pixl2[y, x] = color;// utilizar color seleccionado aqui, a partir de los colores de las bibliotecas.
-                                        updater(y, x);
+                                        Updater(y, x);
                                     }
                                 }
                             }

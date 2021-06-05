@@ -229,5 +229,162 @@ namespace QR_Imagenes.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FF0000,#FF7331,#FFAD00,#FFFF00,#ADFF00,#52FF00,#00FF00,#00AD52,#0052AD,#0000FF,#5200FF,#AD00FF.
+        /// </summary>
+        internal static string P1 {
+            get {
+                return ResourceManager.GetString("P1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #00FF00,#0000FF,#FF00FF,#42FF42,#4242FF,#FF42FF,#8CFF8C,#8C8CFF,#FF8CFF,#D6FFD6,#D6D6FF,#FFD6FF.
+        /// </summary>
+        internal static string P10 {
+            get {
+                return ResourceManager.GetString("P10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FF0000,#FF7B00,#FFFF00,#84FF00,#00FF00,#00847B,#0000FF,#7B00FF,#FF94FF,#D6B500,#BD1000,#5A1000.
+        /// </summary>
+        internal static string P11 {
+            get {
+                return ResourceManager.GetString("P11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #109463,#087B52,#108C39,#319C31,#CEA54A,#CE9439,#BD8C4A,#D68C31,#AD734A,#8C5A31,#6B4229,#84EFFF.
+        /// </summary>
+        internal static string P12 {
+            get {
+                return ResourceManager.GetString("P12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #D6DEE7,#B5CEDE,#E7EFEF,#F7F7F7,#84737B,#948C6B,#847B63,#9C845A,#739CB5,#FF2929,#FFFF00,#9421FF.
+        /// </summary>
+        internal static string P13 {
+            get {
+                return ResourceManager.GetString("P13", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #F7EFEF,#E7DEDE,#D6CECE,#84737B,#B5A5A5,#A59494,#9C8484,#8C6B6B,#7B5A5A,#6B4A4A,#5A3131,#4A2121.
+        /// </summary>
+        internal static string P14 {
+            get {
+                return ResourceManager.GetString("P14", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #F7EFEF,#DEDEDE,#CECECE,#B5B5B5,#A5A5A5,#949494,#848484,#6B6B6B,#5A5A5A,#4A4A4A,#313131,#212121.
+        /// </summary>
+        internal static string P15 {
+            get {
+                return ResourceManager.GetString("P15", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FF8C7B,#FF0000,#FF7B00,#FFFF00,#008400,#00FF00,#0000FF,#009CFF,#D600FF,#FF6BFF,#9C0000,#FF9400.
+        /// </summary>
+        internal static string P16 {
+            get {
+                return ResourceManager.GetString("P16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FF7B7B,#FFB57B,#FFE77B,#FFFF7B,#DEFF7B,#ADFF7B,#7BFF7B,#52AD84,#5284AD,#7B7BFF,#B57BFF,#E77BFF.
+        /// </summary>
+        internal static string P2 {
+            get {
+                return ResourceManager.GetString("P2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #A50000,#A53100,#A57300,#A5A500,#73A500,#31A500,#00A500,#005221,#002152,#0000A5,#3100A5,#7300A5.
+        /// </summary>
+        internal static string P3 {
+            get {
+                return ResourceManager.GetString("P3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #009C00,#5ACE6B,#B5FFDE,#009C6B,#52CEA5,#ADFFD6,#0052AD,#2984D6,#5AADFF,#0000FF,#4A6BFF,#4A6BFF.
+        /// </summary>
+        internal static string P4 {
+            get {
+                return ResourceManager.GetString("P4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #AD7300,#D6AD42,#FFDE8C,#FF0839,#FF4A6B,#FF949C,#AD00FF,#D663FF,#FFCEFF,#FFBD9C,#DE9473,#BD634A.
+        /// </summary>
+        internal static string P5 {
+            get {
+                return ResourceManager.GetString("P5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FF0000,#FF5200,#FFB55A,#FFEFAD,#7B1000,#A54A31,#D6846B,#FFBD9C,#5AADFF,#84C6FF,#ADE7FF,#D6FFFF.
+        /// </summary>
+        internal static string P6 {
+            get {
+                return ResourceManager.GetString("P6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #00FF00,#42FF42,#8CFF8C,#D6FFD6,#0000FF,#4242FF,#8C8CFF,#D6D6FF,#FF0000,#FF4242,#FF8C8C,#FFD6D6.
+        /// </summary>
+        internal static string P7 {
+            get {
+                return ResourceManager.GetString("P7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #003100,#426342,#849C84,#C6D6C6,#7B1000,#A54A29,#D68C5A,#FFC68C,#D6B500,#E7CE39,#F7DE7B,#FFF7BD.
+        /// </summary>
+        internal static string P8 {
+            get {
+                return ResourceManager.GetString("P8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #0000FF,#FF0000,#FFFF00,#4242FF,#FF4242,#FFFF42,#8C8CFF,#FF8C8C,#FFFF8C,#D6D6FF,#FFD6D6,#FFFFD6.
+        /// </summary>
+        internal static string P9 {
+            get {
+                return ResourceManager.GetString("P9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paleta,Color 1 ,Color 2,Color 3,Color 4,Color 5,Color 6,Color 7,Color 8,Color 9,Color 10,Color 11,Color 12,Color 13,Color 14,Color 15
+        ///1,#FF0000,#FF7331,#FFAD00,#FFFF00,#ADFF00,#52FF00,#00FF00,#00AD52,#0052AD,#0000FF,#5200FF,#AD00FF,#FF00FF,#000000,#FFFFFF
+        ///2,#FF7B7B,#FFB57B,#FFE77B,#FFFF7B,#DEFF7B,#ADFF7B,#7BFF7B,#52AD84,#5284AD,#7B7BFF,#B57BFF,#E77BFF,#FF7BFF,#000000,#FFFFFF
+        ///3,#A50000,#A53100,#A57300,#A5A500,#73A500,#31A500,#00A500,#005221,#002152,#0000A5,#3100A5,#7300A5,#A500A5,#000000,#FFFFFF
+        ///4,#009C0 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string paletas {
+            get {
+                return ResourceManager.GetString("paletas", resourceCulture);
+            }
+        }
     }
 }

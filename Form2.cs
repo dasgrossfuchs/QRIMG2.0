@@ -49,11 +49,11 @@ namespace QR_Imagenes
             Graphics grafico = Graphics.FromImage(imagen);
             Bitmap dibujo = new Bitmap(501,501);
             Graphics gfx = Graphics.FromImage(dibujo);
-            Image bck = new Bitmap(QR_Imagenes.Properties.Resources.Mcbck);
+            Image bck = new Bitmap(Properties.Resources.Mcbck);
             grafico.DrawImage(bck,0,0,480,320);
-            int sq = 500 / s, x = 0, y = 0;
-            string tmpcolor ="0";
-            Color valuecolor = Color.White;
+            int sq = 500 / s;
+            string tmpcolor;
+            Color valuecolor;
             for (int i = 0; i < s; i++)
             {
                 for (int ii = 0; ii < s; ii++)
