@@ -176,7 +176,23 @@ namespace QR_Imagenes
             "13 x 13",
             "14 x 14",
             "15 x 15",
-            "16 x 16"});
+            "16 x 16",
+            "17 x 17",
+            "18 x 18",
+            "19 x 19",
+            "20 x 20",
+            "21 x 21",
+            "22 x 22",
+            "23 x 23",
+            "24 x 24",
+            "25 x 25",
+            "26 x 26",
+            "27 x 27",
+            "28 x 28",
+            "29 x 29",
+            "30 x 30",
+            "31 x 31",
+            "32 x 32"});
             this.dimension.Location = new System.Drawing.Point(430, 80);
             this.dimension.Name = "dimension";
             this.dimension.Size = new System.Drawing.Size(112, 21);

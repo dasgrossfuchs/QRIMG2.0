@@ -25,6 +25,7 @@ namespace QR_Imagenes
         int size = 0, selpal = 0;
         string selcol = "w";
         bool md = false;
+        bool cargando = false;
         private void Form1_Load(object sender, EventArgs e)//estado inicial de la forma
         {
             textBox1.Text = "anon";
@@ -126,7 +127,7 @@ namespace QR_Imagenes
                     }
                 }
             }
-            else
+            else if(!cargando)
             {
                 string[,] px2tmp = new string[pixl2.GetLength(0), pixl2.GetLength(1)];
                 for (int i = 0; i < pixl2.GetLength(0); i++)
@@ -535,8 +536,8 @@ namespace QR_Imagenes
         }
         private void botoncargar_Click(object sender, EventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 QRDecoder qd = new QRDecoder();
                 Image img;
                 OpenFileDialog of = new OpenFileDialog() {
@@ -574,6 +575,7 @@ namespace QR_Imagenes
                         form2.ShowDialog();
                         if (form2.OKButtonClicked)
                         {
+                            Cursor.Current = Cursors.WaitCursor;
                             dimension.SelectedIndex = int.Parse(codigo.Split(',').ElementAt(2)) - 1;
                             comboBox1.SelectedIndex = int.Parse(codigo.Split(',').ElementAt(3));
                             if (size == int.Parse(codigo.Split(',').ElementAt(2)))
@@ -586,19 +588,23 @@ namespace QR_Imagenes
                                     {
                                         string color = codigo.Split(',').ElementAt(4 + y*size + x);
                                         pixl2[y, x] = color;// utilizar color seleccionado aqui, a partir de los colores de las bibliotecas.
-                                        Updater(y, x);
+                                        //Updater(y, x);
                                     }
                                 }
                             }
+                            cargando = true;
+                            Cuadricular2();
+                            cargando = false;
+                            Cursor.Current = Cursors.Default;
                         }
                         form2.Dispose();
                     }
                 }
-            //}
-            //catch (Exception)
-            //{
-            //    Errorentrada(5);
-            //}
+            }
+            catch (Exception)
+            {
+                Errorentrada(5);
+            }
         }
         private void botonsalir_Click(object sender, EventArgs e)
         {
