@@ -50,17 +50,12 @@ C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\obj\Debug\QR_Imagenes.Properties.Resourc
 C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\QR-Imagenes.exe.config
 C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\QR-Imagenes.exe
 C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\QR-Imagenes.pdb
-C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\ColorPickerWPF.dll
 C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\QRCodeDecoderLibrary.dll
 C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\QRCodeEncoderLibrary.dll
-C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\QRCoder.dll
-C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\WriteableBitmapEx.Wpf.dll
 C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\QRCodeDecoderLibrary.pdb
 C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\QRCodeDecoderLibrary.xml
 C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\QRCodeEncoderLibrary.pdb
 C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\QRCodeEncoderLibrary.xml
-C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\WriteableBitmapEx.Wpf.pdb
-C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\bin\Debug\WriteableBitmapEx.Wpf.xml
 C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\obj\Debug\QR_Imagenes.Form1.resources
 C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\obj\Debug\QR_Imagenes.Form2.resources
 C:\Users\deos\Desktop\ClasesVS\QRIMG2.0\obj\Debug\QR-Imagenes.csproj.GenerateResource.cache

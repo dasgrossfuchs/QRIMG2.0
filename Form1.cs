@@ -509,13 +509,9 @@ namespace QR_Imagenes
         {
             Coloreta();
             selpal =comboBox1.SelectedIndex;
-            for (int y = 0; y < size; y++)
-            {
-                for (int x = 0; x < size; x++)
-                {
-                    Updater(x,y);
-                }
-            }
+            cargando = true;
+            Cuadricular2();
+            cargando = false;
             ColorSeleccionado();
         }
         private void button1_Click_1(object sender, EventArgs e)
